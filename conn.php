@@ -1,25 +1,38 @@
-<?php
+<?php 
+
 session_start();
-$conn = mysqli_connect("localhost", "root", "", "fred");
 
-if($conn === false){
-    die("Error: Invalid Connection " . mysqli_connect_error());
+$conn = mysqli_connect('localhost', 'root', '', 'church');
+
+if(!$conn){
+    die("connection failed: " . mysqli_connect_error());
 }
 
-$fname = mysqli_real_escape_string($conn, $_REQUEST['firstname']);
-$lname = mysqli_real_escape_string($conn, $_REQUEST['lastname']);
-$numb= mysqli_real_escape_string($conn, $_REQUEST['num']);
-$addr = mysqli_real_escape_string($conn, $_REQUEST['address']);
-$gender = mysqli_real_escape_string($conn, $_REQUEST['gender']);
+if(isset($_POST['submit'])){
 
-$sql = "INSERT INTO User VALUES ('$fname', '$lname', '$numb', '$addr', '$gender')";
-$result = mysqli_query($conn, $sql);
 
-if($result){
-    echo "Successfully Registered!";
-    header("Location: registration.php");
-    exit();
+    $fname = $_POST['firstname'];
+    $lname = $_POST['lastname'];
+    $num = $_POST['num'];
+    $add = $_POST['address'];
+    $gen = $_POST['gender'];
+
+    $sql = "INSERT INTO user VALUES ('','$fname','$lname','$num','$add','$gen')";
+    mysqli_query($conn, $sql);
+
+
+    echo
+    "
+    <script> alert('Data are successfully taken') </script>
+
+    ";
+
+
+
+
 }
+
+   
 
 
 mysqli_close($conn);

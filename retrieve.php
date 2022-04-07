@@ -1,64 +1,87 @@
+<?php
+$connection = mysqli_connect('localhost', 'root', '', 'church');
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+$query = "SELECT * FROM user";
+$result = mysqli_query($connection, $query);
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+?>
 
-    <title>Admin page</title>
-  </head>
+<!DOCTYPE html>
+<html>
 
-  <body>
-      <form action="" method="POST">
-          <table class="table table-striped table-bordered">
-              <tr class="table-primary">
-                  <th>FIRST NAME</th>
-                  <th>LAST NAME</th>
-                  <th>PHONE NUMBER</th>
-                  <th>ADDRESS</th>
-                  <th>GENDER</th>
-              </tr>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-                 <div class="col-12 text-center p-3 ">
-               <input type="submit" name="see" value="member" class="btn btn-primary"></input>
-                 </div>
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-                 <?php
-                 
-                    $connect = mysqli_connect("localhost","root","","fred");
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-                    if(isset($_POST['see'])){
-                        $ret1 = "SELECT * FROM User";
-                        $query = mysqli_query($connect, $ret1);
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
-                        $row = mysqli_fetch_array($query);
 
-                        while($row){
-                ?>
-                        <tr>
-                            <td><?php echo $row['f_name']?></td>
-                            <td><?php echo $row['l_name']?></td>
-                            <td><?php echo $row['p_number']?></td>
-                            <td><?php echo $row['address']?></td>
-                            <td><?php echo $row['gender']?></td>
-                        </tr>
+<body>
 
-                        <?php
-                        }
-                    }
+  <table class="table table-bordered table-responsive">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>FIRST NAME</th>
+        <th>LAST NAME</th>
+        <th>NUMBER</th>
+        <th>ADDRESS</th>
+        <th>GENDER</th>
+        <th>EDIT</th>
+        <th>DELETE</th>
+      </tr>
+    </thead>
 
-                        ?>
+    <tbody>
 
-                 
+      <?php
+      if (mysqli_num_rows($result) > 0) {
 
-          </table>
-      </form>
-  </body>
+        while ($row = mysqli_fetch_assoc($result)) {
 
-   
+          ?>
+
+      <tr>
+        <td><?php echo $row['id']; ?></td>
+        <td><?php echo $row['f_name']; ?></td>
+        <td><?php echo $row['l_name']; ?></td>
+        <td><?php echo $row['p_number']; ?></td>
+        <td><?php echo $row['address']; ?></td>
+        <td><?php echo $row['gender']; ?></td>
+
+        <td>
+          <button type="submit" class="btn btn-success">EDIT</button>
+        </td>
+        <td>
+          <button type="submit" class="btn btn-danger">DELETE</button>
+        </td>
+
+
+
+      </tr>
+
+      <?php
+        }
+      }
+
+      else{
+        echo "No record found";
+      }
+      ?>
+
+      
+    </tbody>
+
+
+
+  </table>
+</body>
+
 </html>
-
